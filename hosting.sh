@@ -1,0 +1,4 @@
+#!/bin/bash
+
+yarn generate
+firebase deploy
