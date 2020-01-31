@@ -1,17 +1,26 @@
 <template>
   <v-container fill-height>
-    <v-card>
-      <v-card-title>
-        👑 ランキング
+    <v-sheet elevation="2" class="pa-8">
+      <v-row>
+        <v-col>
+          <div class="page-title">
+            <v-icon color="primary">fas fa-crown</v-icon>
+            <h1 class="page-title">
+              ランキング
+            </h1>
+          </div>
+        </v-col>
         <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          append-icon="search"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
-      </v-card-title>
+        <v-col
+          ><v-text-field
+            v-model="search"
+            append-icon="fas fa-search"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-col>
+      </v-row>
       <v-data-table
         v-model="selected"
         :headers="headers"
@@ -20,13 +29,15 @@
         sort-by="level"
         sort-desc
         item-key="name"
-        class="elevation-1"
       >
         <template v-slot:item.icon="{ item }">
           <v-img :src="item.avatarUrl" aspect-ratio="1"></v-img>
         </template>
+        <template v-slot:item.loginCheck="{ item }">
+          <v-icon v-if="item.isLogin" dense>fas fa-check</v-icon>
+        </template>
       </v-data-table>
-    </v-card>
+    </v-sheet>
   </v-container>
 </template>
 
@@ -49,14 +60,26 @@ export default Vue.extend({
       selected: [],
       search: '',
       headers: [
-        { text: 'アイコン', value: 'icon', align: 'center' },
+        {
+          text: 'アイコン',
+          value: 'icon',
+          sortable: false,
+          align: 'center',
+          width: 90
+        },
         {
           text: '名前',
           align: 'center',
           sortable: false,
           value: 'name'
         },
-        { text: 'アカウント', value: 'username', align: 'center' },
+        {
+          text: 'アカウント',
+          value: 'username',
+          align: 'center',
+          sortable: false,
+          width: 250
+        },
         { text: 'レベル', value: 'level', width: 100, align: 'center' },
 
         { text: '経験値', value: 'experience', width: 150, align: 'center' },
@@ -77,6 +100,13 @@ export default Vue.extend({
           value: 'totalLoginDays',
           width: 100,
           align: 'center'
+        },
+        {
+          text: '今日のログイン',
+          value: 'loginCheck',
+          width: 85,
+          align: 'center',
+          sortable: false
         }
       ]
     }
@@ -85,9 +115,6 @@ export default Vue.extend({
     cardClass() {
       return this.$vuetify.theme.dark ? 'dark-card' : 'light-card'
     }
-  },
-  created() {
-    this.$store.dispatch('setHostsRef', db.collection('users'))
   },
   head: {
     title: 'ログボ for Misskey'
@@ -101,19 +128,10 @@ export default Vue.extend({
   font-family: 'Concert One', 'Nico Moji', cursive !important;
   color: rgba(244, 67, 54);
 }
-.title-lead {
-  font-size: 1.1rem;
-  line-height: 1.8rem;
-}
-#title-card {
-  border-radius: 5px;
-  padding-top: 120px;
-  padding-bottom: 120px;
-}
-.light-card {
-  background-color: rgba(255, 255, 255, 0.7);
-}
-.dark-card {
-  background-color: #454545;
+
+.page-title {
+  display: inline;
+  vertical-align: middle;
+  margin: 0 auto;
 }
 </style>
