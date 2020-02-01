@@ -31,7 +31,20 @@
         item-key="name"
       >
         <template v-slot:item.icon="{ item }">
-          <v-img :src="item.avatarUrl" aspect-ratio="1"></v-img>
+          <v-img
+            :src="item.avatarUrl"
+            aspect-ratio="1"
+            class="cursorPointer"
+            @click="linkAccount(item.username, item.host)"
+          ></v-img>
+        </template>
+        <template v-slot:item.account="{ item }">
+          <p
+            class="primary--text cursorPointer"
+            @click="linkAccount(item.username, item.host)"
+          >
+            {{ item.username }}@{{ item.host }}
+          </p>
         </template>
         <template v-slot:item.loginCheck="{ item }">
           <v-icon v-if="item.isLogin" dense>fas fa-check</v-icon>
@@ -61,7 +74,6 @@ export default Vue.extend({
       search: '',
       headers: [
         {
-          text: 'アイコン',
           value: 'icon',
           sortable: false,
           align: 'center',
@@ -71,22 +83,23 @@ export default Vue.extend({
           text: '名前',
           align: 'center',
           sortable: false,
-          value: 'name'
+          value: 'name',
+          width: 200
         },
         {
           text: 'アカウント',
-          value: 'username',
+          value: 'account',
           align: 'center',
           sortable: false,
-          width: 250
+          width: 180
         },
         { text: 'レベル', value: 'level', width: 100, align: 'center' },
 
-        { text: '経験値', value: 'experience', width: 150, align: 'center' },
+        { text: '経験値', value: 'experience', width: 120, align: 'center' },
         {
-          text: '次のレベルまで必要な経験値',
+          text: '次のレベルまで',
           value: 'experienceNextLevelNeed',
-          width: 150,
+          width: 100,
           align: 'center'
         },
         {
@@ -116,6 +129,11 @@ export default Vue.extend({
       return this.$vuetify.theme.dark ? 'dark-card' : 'light-card'
     }
   },
+  methods: {
+    linkAccount(username: string, host: string) {
+      window.open('https://' + host + '/@' + username, '_blank')
+    }
+  },
   head: {
     title: 'ログボ for Misskey'
   }
@@ -133,5 +151,9 @@ export default Vue.extend({
   display: inline;
   vertical-align: middle;
   margin: 0 auto;
+}
+
+.cursorPointer {
+  cursor: pointer;
 }
 </style>
