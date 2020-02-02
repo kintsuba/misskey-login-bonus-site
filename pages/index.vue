@@ -1,6 +1,6 @@
 <template>
   <v-container fill-height>
-    <v-sheet elevation="2" class="pa-8">
+    <v-sheet elevation="2" class="pa-4">
       <v-row>
         <v-col>
           <div class="page-title">
