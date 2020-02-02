@@ -58,18 +58,38 @@
 import Vue from 'vue'
 import db from '~/plugins/firebase'
 
+const getData = async () => {
+  const users = await db.collectionGroup('users').get()
+  const usersArray: firebase.firestore.DocumentData[] = []
+  users.forEach((user) => {
+    usersArray.push(user.data())
+  })
+  return usersArray
+}
+
+export interface DataType {
+  users: firebase.firestore.DocumentData[]
+  selected: any
+  search: string
+  headers: {
+    value: string
+    sortable?: boolean
+    align?: string
+    width?: number
+    text?: string
+  }[]
+}
+
 export default Vue.extend({
   components: {},
   async asyncData() {
-    const users = await db.collectionGroup('users').get()
-    const usersArray: firebase.firestore.DocumentData[] = []
-    users.forEach((user) => {
-      usersArray.push(user.data())
-    })
-    return { users: usersArray }
+    if (process.server) {
+      return { users: await getData() }
+    }
   },
-  data() {
+  data(): DataType {
     return {
+      users: [],
       selected: [],
       search: '',
       headers: [
@@ -127,6 +147,11 @@ export default Vue.extend({
   computed: {
     cardClass() {
       return this.$vuetify.theme.dark ? 'dark-card' : 'light-card'
+    }
+  },
+  async created() {
+    if (!process.server) {
+      this.users = await getData()
     }
   },
   methods: {
