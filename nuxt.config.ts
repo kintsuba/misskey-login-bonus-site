@@ -14,9 +14,58 @@ export default {
         hid: 'description',
         name: 'description',
         content: process.env.npm_package_description || ''
+      },
+      {
+        hid: 'og:url',
+        property: 'og:url',
+        content: 'https://misskey-loginbonus.info/'
+      },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      {
+        hid: 'og:title',
+        property: 'og:title',
+        content: 'ログボ for Misskey'
+      },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content: '毎日 Misskey を促進します'
+      },
+      {
+        hid: 'og:site_name',
+        property: 'og:site_name',
+        content: 'ログボ for Misskey'
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: 'https://bukibin-search.com/jewel.png'
       }
     ],
     link: [
+      {
+        rel: 'apple-touch-icon',
+        size: '180x180',
+        href: '/apple-icon.png'
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        size: '96x96',
+        href: '/favicon-96x96.png'
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        size: '32x32',
+        href: '/favicon-32x32.png'
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        size: '16x16',
+        href: '/favicon-16x16.png'
+      },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
