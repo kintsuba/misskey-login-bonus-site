@@ -1,4 +1,4 @@
 #!/bin/bash
 
 yarn generate
-firebase deploy
+yarn firebase deploy
