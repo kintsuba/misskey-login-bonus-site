@@ -26,7 +26,7 @@
         :headers="headers"
         :search="search"
         :items="users"
-        sort-by="level"
+        sort-by="experience"
         sort-desc
         item-key="name"
       >
