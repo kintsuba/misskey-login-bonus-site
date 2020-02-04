@@ -13,7 +13,7 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
+        content: '毎日 Misskey を促進します。'
       },
       {
         hid: 'og:url',
@@ -29,7 +29,7 @@ export default {
       {
         hid: 'og:description',
         property: 'og:description',
-        content: '毎日 Misskey を促進します'
+        content: '毎日 Misskey を促進します。'
       },
       {
         hid: 'og:site_name',
