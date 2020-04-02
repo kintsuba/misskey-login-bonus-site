@@ -29,6 +29,7 @@
         sort-by="experience"
         sort-desc
         item-key="name"
+        :loading="isLoading"
       >
         <template v-slot:item.icon="{ item }">
           <v-img
@@ -50,6 +51,9 @@
           <v-icon v-if="item.isLogin" dense>fas fa-check</v-icon>
         </template>
       </v-data-table>
+      <v-overlay :value="isLoading">
+        <v-progress-circular indeterminate size="64"></v-progress-circular>
+      </v-overlay>
     </v-sheet>
   </v-container>
 </template>
@@ -71,6 +75,7 @@ export interface DataType {
   users: firebase.firestore.DocumentData[]
   selected: any
   search: string
+  isLoading: boolean
   headers: {
     value: string
     sortable?: boolean
@@ -82,16 +87,12 @@ export interface DataType {
 
 export default Vue.extend({
   components: {},
-  async asyncData() {
-    if (process.server) {
-      return { users: await getData() }
-    }
-  },
   data(): DataType {
     return {
       users: [],
       selected: [],
       search: '',
+      isLoading: true,
       headers: [
         {
           value: 'icon',
@@ -153,6 +154,7 @@ export default Vue.extend({
     if (!process.server) {
       this.users = await getData()
     }
+    this.isLoading = false
   },
   methods: {
     linkAccount(username: string, host: string) {

@@ -13,74 +13,74 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: '毎日 Misskey を促進します。'
+        content: '毎日 Misskey を促進します。',
       },
       {
         hid: 'og:url',
         property: 'og:url',
-        content: 'https://misskey-loginbonus.info/'
+        content: 'https://misskey-loginbonus.info/',
       },
       { hid: 'og:type', property: 'og:type', content: 'website' },
       {
         hid: 'og:title',
         property: 'og:title',
-        content: 'ログボ for Misskey'
+        content: 'ログボ for Misskey',
       },
       {
         hid: 'og:description',
         property: 'og:description',
-        content: '毎日 Misskey を促進します。'
+        content: '毎日 Misskey を促進します。',
       },
       {
         hid: 'og:site_name',
         property: 'og:site_name',
-        content: 'ログボ for Misskey'
+        content: 'ログボ for Misskey',
       },
       {
         hid: 'og:image',
         property: 'og:image',
-        content: 'https://bukibin-search.com/jewel.png'
-      }
+        content: 'https://bukibin-search.com/jewel.png',
+      },
     ],
     link: [
       {
         rel: 'apple-touch-icon',
         size: '180x180',
-        href: '/apple-icon.png'
+        href: '/apple-icon.png',
       },
       {
         rel: 'icon',
         type: 'image/png',
         size: '96x96',
-        href: '/favicon-96x96.png'
+        href: '/favicon-96x96.png',
       },
       {
         rel: 'icon',
         type: 'image/png',
         size: '32x32',
-        href: '/favicon-32x32.png'
+        href: '/favicon-32x32.png',
       },
       {
         rel: 'icon',
         type: 'image/png',
         size: '16x16',
-        href: '/favicon-16x16.png'
+        href: '/favicon-16x16.png',
       },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css?family=Noto+Sans+JP|Concert+One&display=swap'
+          'https://fonts.googleapis.com/css?family=Noto+Sans+JP|Concert+One&display=swap',
       },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,700'
+        href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,700',
       },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/earlyaccess/nicomoji.css'
-      }
-    ]
+        href: 'https://fonts.googleapis.com/earlyaccess/nicomoji.css',
+      },
+    ],
   },
   /*
    ** Customize the progress-bar color
@@ -101,7 +101,7 @@ export default {
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     '@nuxtjs/vuetify',
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
   ],
   /*
    ** Nuxt.js modules
@@ -111,7 +111,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
   ],
   /*
    ** Axios module configuration
@@ -134,7 +134,7 @@ export default {
           error: '#ff5722',
           warning: '#ffc107',
           info: '#009688',
-          success: '#03a9f4'
+          success: '#03a9f4',
         },
         light: {
           primary: '#f44336',
@@ -143,17 +143,17 @@ export default {
           error: '#ff5722',
           warning: '#ffc107',
           info: '#009688',
-          success: '#03a9f4'
-        }
-      }
+          success: '#03a9f4',
+        },
+      },
     },
     defaultAssets: {
       font: {
         family:
           '-apple-system, BlinkMacSystemFont, Roboto, "游ゴシック体", YuGothic, "Yu Gothic Medium", sans-serif',
-        size: 20
-      }
-    }
+        size: 20,
+      },
+    },
   },
   /*
    ** Build configuration
@@ -162,6 +162,6 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend({ _config, _ctx }: { _config: any; _ctx: any }) {}
-  }
+    extend({ _config, _ctx }: { _config: any; _ctx: any }) {},
+  },
 }
