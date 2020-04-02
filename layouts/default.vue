@@ -46,10 +46,10 @@ export default Vue.extend({
         {
           icon: 'fas fa-home',
           title: 'Overview',
-          to: '/'
-        }
+          to: '/',
+        },
       ],
-      title: 'ログボ for Misskey'
+      title: 'ログボ for Misskey',
     }
   },
   computed: {
@@ -61,13 +61,13 @@ export default Vue.extend({
     },
     bg() {
       return this.$vuetify.theme.dark ? 'dark-bg' : 'light-bg'
-    }
+    },
   },
   methods: {
     changeTheme() {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
-    }
-  }
+    },
+  },
 })
 </script>
 <style lang="scss" scoped>

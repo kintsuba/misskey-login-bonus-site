@@ -97,21 +97,21 @@ export default Vue.extend({
           value: 'icon',
           sortable: false,
           align: 'center',
-          width: 90
+          width: 90,
         },
         {
           text: '名前',
           align: 'center',
           sortable: false,
           value: 'name',
-          width: 200
+          width: 200,
         },
         {
           text: 'アカウント',
           value: 'account',
           align: 'center',
           sortable: false,
-          width: 180
+          width: 180,
         },
         { text: 'レベル', value: 'level', width: 100, align: 'center' },
 
@@ -120,34 +120,34 @@ export default Vue.extend({
           text: '次のレベルまで',
           value: 'experienceNextLevelNeed',
           width: 100,
-          align: 'center'
+          align: 'center',
         },
         {
           text: '連続ログイン日数',
           value: 'continuousloginDays',
           width: 100,
-          align: 'center'
+          align: 'center',
         },
         {
           text: '合計ログイン日数',
           value: 'totalLoginDays',
           width: 100,
-          align: 'center'
+          align: 'center',
         },
         {
           text: '今日のログイン',
           value: 'loginCheck',
           width: 85,
           align: 'center',
-          sortable: false
-        }
-      ]
+          sortable: false,
+        },
+      ],
     }
   },
   computed: {
     cardClass() {
       return this.$vuetify.theme.dark ? 'dark-card' : 'light-card'
-    }
+    },
   },
   async created() {
     if (!process.server) {
@@ -157,11 +157,13 @@ export default Vue.extend({
   methods: {
     linkAccount(username: string, host: string) {
       window.open('https://' + host + '/@' + username, '_blank')
+    },
+  },
+  head() {
+    return {
+      title: 'ログボ for Misskey',
     }
   },
-  head: {
-    title: 'ログボ for Misskey'
-  }
 })
 </script>
 
