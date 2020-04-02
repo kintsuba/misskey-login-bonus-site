@@ -8,7 +8,7 @@ const firebaseConfig = {
   projectId: 'misskey-login-bonus',
   storageBucket: 'misskey-login-bonus.appspot.com',
   messagingSenderId: '1046728037357',
-  appId: '1:1046728037357:web:b258db2dc4c5148215cde4'
+  appId: '1:1046728037357:web:b258db2dc4c5148215cde4',
 }
 
 export default !firebase.apps.length
