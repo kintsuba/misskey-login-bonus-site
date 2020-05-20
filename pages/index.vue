@@ -151,9 +151,7 @@ export default Vue.extend({
     },
   },
   async created() {
-    if (!process.server) {
-      this.users = await getData()
-    }
+    this.users = await getData()
     this.isLoading = false
   },
   methods: {
