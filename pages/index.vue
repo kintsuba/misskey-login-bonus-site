@@ -1,60 +1,64 @@
 <template>
-  <v-container fill-height>
-    <v-sheet elevation="2" class="pa-4">
-      <v-row>
-        <v-col>
-          <div class="page-title">
-            <v-icon color="primary">fas fa-crown</v-icon>
-            <h1 class="page-title">
-              ランキング
-            </h1>
-          </div>
-        </v-col>
-        <v-spacer></v-spacer>
-        <v-col
-          ><v-text-field
-            v-model="search"
-            append-icon="fas fa-search"
-            label="Search"
-            single-line
-            hide-details
-          ></v-text-field>
-        </v-col>
-      </v-row>
-      <v-data-table
-        v-model="selected"
-        :headers="headers"
-        :search="search"
-        :items="users"
-        sort-by="experience"
-        sort-desc
-        item-key="name"
-        :loading="isLoading"
-      >
-        <template v-slot:item.icon="{ item }">
-          <v-img
-            :src="item.avatarUrl"
-            aspect-ratio="1"
-            class="cursorPointer"
-            @click="linkAccount(item.username, item.host)"
-          ></v-img>
-        </template>
-        <template v-slot:item.account="{ item }">
-          <p
-            class="primary--text cursorPointer"
-            @click="linkAccount(item.username, item.host)"
+  <v-container fluid>
+    <v-row justify="center">
+      <v-col cols="12" lg="9" xl="8">
+        <v-sheet elevation="2" class="px-4">
+          <v-row>
+            <v-col>
+              <div class="page-title">
+                <v-icon color="primary">fas fa-crown</v-icon>
+                <h1 class="page-title">
+                  ランキング
+                </h1>
+              </div>
+            </v-col>
+            <v-spacer></v-spacer>
+            <v-col
+              ><v-text-field
+                v-model="search"
+                append-icon="fas fa-search"
+                label="Search"
+                single-line
+                hide-details
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-data-table
+            v-model="selected"
+            :headers="headers"
+            :search="search"
+            :items="users"
+            sort-by="experience"
+            sort-desc
+            item-key="name"
+            :loading="isLoading"
           >
-            {{ item.username }}@{{ item.host }}
-          </p>
-        </template>
-        <template v-slot:item.loginCheck="{ item }">
-          <v-icon v-if="item.isLogin" dense>fas fa-check</v-icon>
-        </template>
-      </v-data-table>
-      <v-overlay :value="isLoading">
-        <v-progress-circular indeterminate size="64"></v-progress-circular>
-      </v-overlay>
-    </v-sheet>
+            <template v-slot:item.icon="{ item }">
+              <v-img
+                :src="item.avatarUrl"
+                aspect-ratio="1"
+                class="cursorPointer"
+                @click="linkAccount(item.username, item.host)"
+              ></v-img>
+            </template>
+            <template v-slot:item.account="{ item }">
+              <p
+                class="primary--text cursorPointer"
+                @click="linkAccount(item.username, item.host)"
+              >
+                {{ item.username }}@{{ item.host }}
+              </p>
+            </template>
+            <template v-slot:item.loginCheck="{ item }">
+              <v-icon v-if="item.isLogin" dense>fas fa-check</v-icon>
+            </template>
+          </v-data-table>
+          <v-overlay :value="isLoading">
+            <v-progress-circular indeterminate size="64"></v-progress-circular>
+          </v-overlay>
+        </v-sheet>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
