@@ -7,4 +7,12 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
   modules: ["@nuxt/ui", "@nuxt/fonts", "@nuxtjs/google-fonts"],
+
+  googleFonts: {
+    families: {
+      "Cherry+Bomb+One": true,
+    },
+    display: "swap",
+    text: "ログボ！",
+  },
 });
