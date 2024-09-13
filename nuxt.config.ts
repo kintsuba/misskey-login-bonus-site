@@ -7,6 +7,10 @@ export default defineNuxtConfig({
   },
   compatibilityDate: "2024-09-14",
 
+  nitro: {
+    preset: "firebase",
+  },
+
   devtools: { enabled: true },
   modules: [
     "@nuxt/ui",
