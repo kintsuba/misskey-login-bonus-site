@@ -1,13 +1,131 @@
-<script setup lang="ts">
-const route = useRoute();
-</script>
-
 <template>
   <UContainer>
-    <h1>Nuxt Routing set up successfully!</h1>
-    <p>Current route: {{ route.path }}</p>
-    <a href="https://nuxt.com/docs/getting-started/routing" target="_blank"
-      >Learn more about Nuxt Routing</a
+    <h2 class="mt-8 text-primary font-bold text-4xl">ランキング</h2>
+    <p class="my-4 text-gray-400 text-sm">
+      1ヶ月以内に1回以上ログインしている人のみ表示しています。
+    </p>
+
+    <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
+      <UInput v-model="q" placeholder="ユーザーを検索" />
+    </div>
+    <UTable :sort="sort" :rows="filteredRows" :columns="columns">
+      <template #avatar-data="{ row }">
+        <NuxtImg
+          :src="row.avatarUrl"
+          loading="lazy"
+          width="40"
+          height="40"
+          fit="fill"
+        />
+      </template>
+      <template #username-data="{ row }">
+        <ULink
+          :to="`https://${row.host}/@${row.username}`"
+          active-class="text-primary-700"
+          inactive-class="text-primary"
+          target="_blank"
+        >
+          {{ `${row.username}@${row.host}` }}
+        </ULink>
+      </template>
+      <template #lastLoginDate-data="{ row }">
+        {{ formatDate(row.lastLoginDate.toDate()) }}
+      </template>
+    </UTable>
+    <div
+      class="mb-8 flex justify-end px-3 py-3.5 border-t border-gray-200 dark:border-gray-700"
     >
+      <UPagination
+        v-model="page"
+        :page-count="pageCount"
+        :total="users.length"
+      />
+    </div>
   </UContainer>
 </template>
+
+<script setup lang="ts">
+import { collectionGroup, query, Timestamp, where } from "firebase/firestore";
+import { type User } from "~/types/user";
+
+const sort = ref({
+  column: "lastLoginDate",
+  direction: "desc" as "asc" | "desc",
+});
+
+const columns = [
+  {
+    key: "avatar",
+  },
+  {
+    key: "name",
+    label: "名前",
+  },
+  {
+    key: "username",
+    label: "アカウント",
+  },
+  {
+    key: "totalLoginDays",
+    label: "合計ログイン日数",
+    sortable: true,
+    rowClass: "text-center",
+    direction: "desc" as "asc" | "desc",
+  },
+  {
+    key: "continuousloginDays",
+    label: "連続ログイン日数",
+    sortable: true,
+    rowClass: "text-center",
+    direction: "desc" as "asc" | "desc",
+  },
+  {
+    key: "lastLoginDate",
+    label: "最終ログイン日時",
+    sortable: true,
+    rowClass: "text-center",
+  },
+];
+
+const formatDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = ("0" + (date.getMonth() + 1)).slice(-2); // 月は0始まりのため+1する
+  const day = ("0" + date.getDate()).slice(-2);
+  const hours = ("0" + date.getHours()).slice(-2);
+  const minutes = ("0" + date.getMinutes()).slice(-2);
+
+  return `${year}/${month}/${day} ${hours}:${minutes}`;
+};
+
+const db = useFirestore();
+
+const now = new Date();
+const baseDate = new Date(now.setMonth(now.getMonth() - 1)); // 1か月以内にログインしていない人のデータは取得しない
+const users = useCollection<User>(
+  query(collectionGroup(db, "users"), where("lastLoginDate", ">=", baseDate))
+);
+
+const page = ref(1);
+const pageCount = 10;
+
+const rows = computed(() => {
+  return users.value.slice(
+    (page.value - 1) * pageCount,
+    page.value * pageCount
+  );
+});
+
+const q = ref("");
+
+const filteredRows = computed(() => {
+  if (!q.value) {
+    return rows.value;
+  }
+
+  return users.value.filter((user) => {
+    return Object.values(user).some((value) => {
+      return String(value).toLowerCase().includes(q.value.toLowerCase());
+    });
+  });
+});
+</script>
