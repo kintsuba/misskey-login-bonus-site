@@ -1,39 +1,4 @@
 {
-  "compilerOptions": {
-    "target": "es2018",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "lib": [
-      "esnext",
-      "esnext.asynciterable",
-      "dom"
-    ],
-    "esModuleInterop": true,
-    "allowJs": true,
-    "sourceMap": true,
-    "strict": true,
-    "noEmit": true,
-    "baseUrl": ".",
-    "paths": {
-      "~/*": [
-        "./*"
-      ],
-      "@/*": [
-        "./*"
-      ]
-    },
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/vuetify/types"
-    ],
-    "types": [
-      "@types/node",
-      "@nuxt/types",
-      "vuetify",
-      "nuxt-i18n"
-    ]
-  },
-  "exclude": [
-    "node_modules"
-  ]
+  // https://nuxt.com/docs/guide/concepts/typescript
+  "extends": "./.nuxt/tsconfig.json"
 }
