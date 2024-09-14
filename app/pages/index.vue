@@ -1,6 +1,6 @@
 <template>
   <UContainer>
-    <h2 class="mt-8 text-primary font-bold text-4xl">ランキング</h2>
+    <h2 class="mt-8 text-primary font-bold text-4xl">ログボメンバー</h2>
     <p class="my-4 text-gray-400 text-sm">
       1ヶ月以内に1回以上ログインしている人のみ表示しています。
     </p>
@@ -8,15 +8,9 @@
     <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
       <UInput v-model="q" placeholder="ユーザーを検索" />
     </div>
-    <UTable :sort="sort" :rows="filteredRows" :columns="columns">
+    <UTable :sort="sort" :rows="pagedRows" :columns="columns">
       <template #avatar-data="{ row }">
-        <NuxtImg
-          :src="row.avatarUrl"
-          loading="lazy"
-          width="40"
-          height="40"
-          fit="fill"
-        />
+        <NuxtImg :src="row.avatarUrl" loading="lazy" fit="fill" />
       </template>
       <template #username-data="{ row }">
         <ULink
@@ -56,34 +50,38 @@ const sort = ref({
 const columns = [
   {
     key: "avatar",
+    rowClass: "w-16",
   },
   {
     key: "name",
     label: "名前",
+    rowClass: "max-w-60 truncate",
   },
   {
     key: "username",
     label: "アカウント",
+    class: "hidden md:table-cell",
+    rowClass: "hidden lg:table-cell min-w-20 max-w-60 truncate",
   },
   {
     key: "totalLoginDays",
     label: "合計ログイン日数",
     sortable: true,
-    rowClass: "text-center",
-    direction: "desc" as "asc" | "desc",
+    direction: "desc" as "asc" as const,
+    rowClass: "min-w-24 text-center",
   },
   {
     key: "continuousloginDays",
     label: "連続ログイン日数",
     sortable: true,
-    rowClass: "text-center",
-    direction: "desc" as "asc" | "desc",
+    direction: "desc" as "asc" as const,
+    rowClass: "min-w-24 text-center",
   },
   {
     key: "lastLoginDate",
     label: "最終ログイン日時",
     sortable: true,
-    rowClass: "text-center",
+    rowClass: "min-w-36 text-center",
   },
 ];
 
@@ -105,21 +103,11 @@ const users = useCollection<User>(
   query(collectionGroup(db, "users"), where("lastLoginDate", ">=", baseDate))
 );
 
-const page = ref(1);
-const pageCount = 10;
-
-const rows = computed(() => {
-  return users.value.slice(
-    (page.value - 1) * pageCount,
-    page.value * pageCount
-  );
-});
-
 const q = ref("");
 
-const filteredRows = computed(() => {
+const searchedRows = computed(() => {
   if (!q.value) {
-    return rows.value;
+    return users.value;
   }
 
   return users.value.filter((user) => {
@@ -127,5 +115,15 @@ const filteredRows = computed(() => {
       return String(value).toLowerCase().includes(q.value.toLowerCase());
     });
   });
+});
+
+const page = ref(1);
+const pageCount = 10;
+
+const pagedRows = computed(() => {
+  return searchedRows.value.slice(
+    (page.value - 1) * pageCount,
+    page.value * pageCount
+  );
 });
 </script>
