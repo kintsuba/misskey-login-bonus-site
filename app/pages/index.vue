@@ -8,7 +8,12 @@
     <div class="flex px-3 py-3.5 border-b border-gray-200 dark:border-gray-700">
       <UInput v-model="q" placeholder="ユーザーを検索" />
     </div>
-    <UTable :sort="sort" :rows="pagedRows" :columns="columns">
+    <UTable
+      v-model:sort="sort"
+      sort-mode="manual"
+      :rows="pagedRows"
+      :columns="columns"
+    >
       <template #avatar-data="{ row }">
         <NuxtImg :src="row.avatarUrl" loading="lazy" fit="fill" />
       </template>
@@ -39,7 +44,12 @@
 </template>
 
 <script setup lang="ts">
-import { collectionGroup, query, Timestamp, where } from "firebase/firestore";
+import {
+  collectionGroup,
+  query,
+  type Timestamp,
+  where,
+} from "firebase/firestore";
 import { type User } from "~/types/user";
 
 const sort = ref({
@@ -67,14 +77,14 @@ const columns = [
     key: "totalLoginDays",
     label: "合計ログイン日数",
     sortable: true,
-    direction: "desc" as "asc" as const,
+    direction: "desc" as const,
     rowClass: "min-w-24 text-center",
   },
   {
     key: "continuousloginDays",
     label: "連続ログイン日数",
     sortable: true,
-    direction: "desc" as "asc" as const,
+    direction: "desc" as const,
     rowClass: "min-w-24 text-center",
   },
   {
@@ -105,12 +115,54 @@ const users = useCollection<User>(
 
 const q = ref("");
 
+const compareNumber = (
+  a: number | undefined,
+  b: number | undefined,
+  isDesc = false
+) => {
+  if (!a || !b) return 0;
+  if (!isDesc) {
+    return a - b;
+  } else {
+    return b - a;
+  }
+};
+const compareTimestamp = (
+  a: Timestamp | undefined,
+  b: Timestamp | undefined,
+  isDesc = false
+) => {
+  if (!a || !b) return 0;
+
+  if (!isDesc) {
+    return a.seconds - b.seconds;
+  } else {
+    return b.seconds - a.seconds;
+  }
+};
+
+const compareUser = (a: User, b: User) => {
+  const isDesc = sort.value.direction === "desc" ? true : false;
+
+  switch (sort.value.column) {
+    case "totalLoginDays":
+      return compareNumber(a.totalLoginDays, b.totalLoginDays, isDesc);
+    case "continuousloginDays":
+      if (!a.totalLoginDays || !b.totalLoginDays) return 0;
+      return compareNumber(a.totalLoginDays, b.totalLoginDays, isDesc);
+    case "lastLoginDate":
+      return compareTimestamp(a.lastLoginDate, b.lastLoginDate, isDesc);
+    default:
+      return 0;
+  }
+};
+
 const searchedRows = computed(() => {
   if (!q.value) {
-    return users.value;
+    return users.value.toSorted(compareUser);
   }
 
-  return users.value.filter((user) => {
+  return users.value.toSorted(compareUser).filter((user) => {
     return Object.values(user).some((value) => {
       return String(value).toLowerCase().includes(q.value.toLowerCase());
     });

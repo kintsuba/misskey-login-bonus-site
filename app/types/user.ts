@@ -1,3 +1,5 @@
+import type { Timestamp } from "firebase/firestore";
+
 export interface User {
   avatarUrl?: string;
   continuousloginDays?: number;
@@ -6,7 +8,7 @@ export interface User {
   host?: string;
   isLastLogin?: boolean;
   isLogin?: boolean;
-  lastLoginDate?: string;
+  lastLoginDate?: Timestamp;
   level?: number;
   name?: string;
   totalLoginDays?: number;
