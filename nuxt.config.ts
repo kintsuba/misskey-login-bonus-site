@@ -9,6 +9,13 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: "firebase",
+    firebase: {
+      gen: 2,
+      nodeVersion: "20",
+      httpsOptions: {
+        region: "asia-northeast1",
+      },
+    },
   },
 
   devtools: { enabled: true },
@@ -19,6 +26,10 @@ export default defineNuxtConfig({
     "nuxt-vuefire",
     "@nuxt/image",
   ],
+
+  colorMode: {
+    preference: "light",
+  },
 
   googleFonts: {
     families: {
