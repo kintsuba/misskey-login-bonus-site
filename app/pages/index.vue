@@ -15,11 +15,18 @@
       :columns="columns"
     >
       <template #avatar-data="{ row }">
-        <NuxtImg :src="row.avatarUrl" loading="lazy" fit="fill" />
+        <ULink
+          :to="userLink(row)"
+          active-class="text-primary-700"
+          inactive-class="text-primary"
+          target="_blank"
+        >
+          <NuxtImg :src="row.avatarUrl" loading="lazy" fit="fill" />
+        </ULink>
       </template>
       <template #username-data="{ row }">
         <ULink
-          :to="`https://${row.host}/@${row.username}`"
+          :to="userLink(row)"
           active-class="text-primary-700"
           inactive-class="text-primary"
           target="_blank"
@@ -94,6 +101,10 @@ const columns = [
     rowClass: "min-w-36 text-center",
   },
 ];
+
+const userLink = (user: User) => {
+  return `https://${user.host}/@${user.username}`;
+};
 
 const formatDate = (date: Date) => {
   const year = date.getFullYear();
