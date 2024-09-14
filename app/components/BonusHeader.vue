@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-primary-500 w-full shadow">
+  <header class="bg-primary w-full shadow">
     <UContainer class="h-14 flex justify-between align-middle">
       <h1 class="flex">
         <UButton
