@@ -77,7 +77,7 @@ const columns = [
   {
     key: "username",
     label: "アカウント",
-    class: "hidden md:table-cell",
+    class: "hidden lg:table-cell",
     rowClass: "hidden lg:table-cell min-w-20 max-w-60 truncate",
   },
   {
