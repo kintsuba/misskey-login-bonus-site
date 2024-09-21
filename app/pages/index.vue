@@ -159,8 +159,11 @@ const compareUser = (a: User, b: User) => {
     case "totalLoginDays":
       return compareNumber(a.totalLoginDays, b.totalLoginDays, isDesc);
     case "continuousloginDays":
-      if (!a.totalLoginDays || !b.totalLoginDays) return 0;
-      return compareNumber(a.totalLoginDays, b.totalLoginDays, isDesc);
+      return compareNumber(
+        a.continuousloginDays,
+        b.continuousloginDays,
+        isDesc
+      );
     case "lastLoginDate":
       return compareTimestamp(a.lastLoginDate, b.lastLoginDate, isDesc);
     default:
